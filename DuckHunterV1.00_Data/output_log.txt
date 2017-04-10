@@ -17,9 +17,14 @@ Platform assembly: C:\Users\Public\Documents\Unity Projects\DuckHunterFinal\Duck
 Loading C:\Users\Public\Documents\Unity Projects\DuckHunterFinal\DuckHunterV1.00_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
 Platform assembly: C:\Users\Public\Documents\Unity Projects\DuckHunterFinal\DuckHunterV1.00_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
 Loading C:\Users\Public\Documents\Unity Projects\DuckHunterFinal\DuckHunterV1.00_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
-- Completed reload, in  0.145 seconds
+- Completed reload, in  0.020 seconds
 Platform assembly: C:\Users\Public\Documents\Unity Projects\DuckHunterFinal\DuckHunterV1.00_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: C:\Users\Public\Documents\Unity Projects\DuckHunterFinal\DuckHunterV1.00_Data\Managed\System.dll (this message is harmless)
 desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
 <RI> Initializing input.
 <RI> Input initialized.
+<RI> Initialized touch support.
+UnloadTime: 2.091453 ms
+Setting up 2 worker threads for Enlighten.
+  Thread -> id: 2bdc -> priority: 1 
+  Thread -> id: 2e34 -> priority: 1 
