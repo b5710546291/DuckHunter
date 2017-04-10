@@ -9,6 +9,10 @@ public class duckAI : MonoBehaviour {
 	public bool flying;
 	float speed;
 	float prespeed;
+	float curAngle;
+	RaycastHit hit;
+	string turn;
+	public GameObject deadSFX;
 
 
 	// Use this for initialization
@@ -17,19 +21,107 @@ public class duckAI : MonoBehaviour {
 		flying = true;
 		speed = Random.Range (0.5f, 3.0f);
 		prespeed = speed;
+		curAngle = this.transform.rotation.eulerAngles.y;
 		anim.SetBool ("flying", flying);
+		turn = "none";
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
-		this.gameObject.transform.Translate (Vector3.down * Time.deltaTime * speed);
+		Vector3 physicsCentre = this.transform.position + this.GetComponent<BoxCollider>().center;
+		//	Debug.DrawRay (physicsCentre,Quaternion.AngleAxis(curAngle + 0f, Vector3.up) * Vector3.forward * 4f, Color.red, 1);
+		//	Debug.DrawRay (physicsCentre,Quaternion.AngleAxis(curAngle + 45f,this.transform.rotation * Vector3.up) * Vector3.forward * 2.5f, Color.red, 1);
+		//	Debug.DrawRay (physicsCentre,Quaternion.AngleAxis(curAngle -45f,this.transform.rotation * Vector3.up) * Vector3.forward * 2.5f, Color.red, 1);
+		float randfly = Random.Range (0.0f,10.0f);
+
+
+		if (Physics.Raycast (physicsCentre, this.transform.rotation * Vector3.forward, out hit, 0.7f,~(1 << 9))) {
+			Debug.Log (hit.transform.gameObject.tag);
+			this.gameObject.transform.Translate (Vector3.back * Time.deltaTime * speed * 2f);
+		}
+
+
+		if (Physics.Raycast (physicsCentre, this.transform.rotation * Vector3.forward, out hit, 4f,~(1 << 9))) {
+				if (randfly <= 5.0f) {
+					bool res = checkPath (physicsCentre, -1);
+					if (res) {
+						res = checkPath (physicsCentre, 1);
+						if (res) {
+							curAngle += 180f;
+						} else {
+							curAngle += 30f;
+						}
+					} else {
+						curAngle -= 30f;
+					}
+				} else {
+					bool res = checkPath (physicsCentre, 1);
+					if (res) {
+						res = checkPath (physicsCentre, -1);
+						if (res) {
+							curAngle += 180f;
+						} else {
+							curAngle -= 30f;
+						}
+					} else {
+						curAngle += 30f;
+					}
+				}
+		} else {
+			if (turn == "left") {
+				curAngle -= 0.4f;
+			} else if (turn == "right") {
+				curAngle += 0.4f;
+			} else {
+				if (randfly <= 0.5f) {
+					turn = "left";
+					Invoke ("resetTurn",1f);
+				} else if(randfly <= 1f){
+					turn = "right";
+					Invoke ("resetTurn",1f);
+				}
+			}
+
+		}
+
+
+		//curAngle += 1f;
+		curAngle = curAngle % 360;
+		if (flying) {
+			this.gameObject.transform.Translate (Vector3.forward * Time.deltaTime * speed);
+			this.gameObject.transform.Translate (Vector3.down * Time.deltaTime * 0.5f);
+			this.transform.localRotation = Quaternion.AngleAxis (curAngle, Vector3.up);
+		}
 		if (this.transform.position.y <= 0f) {
 			Destroy (this.gameObject);
 		}
+		anim.SetBool ("flying", flying);
+	//	Debug.DrawRay (physicsCentre,Vector3.down * 0.25f, Color.red, 1);
+	//	if (Physics.Raycast (physicsCentre, Vector3.down, out hit, 0.25f)) {
+	//		if (hit.transform.gameObject.tag != "Enemy" && hit.transform.gameObject.tag != "Duck" && flying == true) {
+	//			flying = false;
+	//		}
+	//	} else {
+	//		flying = true;
+	//	}
 	}
 
 	public void death(){
 		Instantiate( explode, transform.position, transform.rotation );
+		Instantiate( deadSFX, transform.position, transform.rotation );
 		Destroy (this.gameObject);
 	}
+
+	bool checkPath(Vector3 physicsCentre ,float rotation){
+		if (Physics.Raycast (physicsCentre, Quaternion.AngleAxis (curAngle + (45f * rotation), this.transform.rotation * Vector3.up) * Vector3.forward, out hit, 2.5f,~(1 << 9))) {
+				return true;
+		} 
+		return false;
+	}
+
+
+	void resetTurn(){
+		turn = "none";
+	}
+
 }

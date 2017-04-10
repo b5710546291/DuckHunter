@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class remove : MonoBehaviour {
 
+
 	// Use this for initialization
 	void Start () {
 		Invoke ("death", 3.0f);
@@ -11,7 +12,7 @@ public class remove : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+
 	}
 
 	void death(){

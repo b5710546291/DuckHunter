@@ -15,6 +15,7 @@ public class mouseCharController : MonoBehaviour {
 	public DuckSpawner spawn4;
 	public DuckSpawner spawn5;
 
+	int killcount;
 
 	GameObject charactor;
 
@@ -63,6 +64,8 @@ public class mouseCharController : MonoBehaviour {
 					if (tagc == "Duck") {
 						duckAI sc = (duckAI)obj.GetComponent<duckAI> ();
 						sc.death ();
+
+						killcount++;
 						float rando = Random.Range (0.0f, 5.0f);
 						if (rando < 1.0f)
 							spawn1.Spawn ();

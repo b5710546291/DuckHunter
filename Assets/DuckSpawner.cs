@@ -17,8 +17,7 @@ public class DuckSpawner : MonoBehaviour {
 
 	IEnumerator SpawnDuck(float waitTime){
 		float a = Random.Range (1f, 10f);
-		Instantiate (duck, this.gameObject.transform.position, Quaternion.identity);
-
+		Instantiate (duck, this.gameObject.transform.position, Quaternion.Euler(0.0f,Random.Range(0.0f,360.0f),0.0f));
 		yield return new WaitForSeconds(waitTime);
 		StartCoroutine (SpawnDuck (a));
 	}
