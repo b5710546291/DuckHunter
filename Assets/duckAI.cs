@@ -19,7 +19,7 @@ public class duckAI : MonoBehaviour {
 	void Start () {
 		anim = GetComponent<Animator> ();
 		flying = true;
-		speed = Random.Range (0.5f, 3.0f);
+		speed = Random.Range (0.5f, 8.0f);
 		prespeed = speed;
 		curAngle = this.transform.rotation.eulerAngles.y;
 		anim.SetBool ("flying", flying);
