@@ -37,6 +37,7 @@ public class mouseCharController : MonoBehaviour {
 	float normalFOV;
 	float fireTime = 1.2f;
 	bool fireable = true;
+	float spreadFactor = 0.001f;
 
 	// Use this for initialization
 	void Start () {
@@ -77,7 +78,12 @@ public class mouseCharController : MonoBehaviour {
 
 			int layermask = ~(1 << 8);
 
-			if (Physics.Raycast (physicsCentre, this.transform.forward, out hit,Mathf.Infinity,layermask)) {
+			Vector3 direction = transform.forward;
+			direction.x += Random.Range(-spreadFactor, spreadFactor);
+			direction.y += Random.Range(-spreadFactor, spreadFactor);
+			direction.z += Random.Range(-spreadFactor, spreadFactor);
+
+			if (Physics.Raycast (physicsCentre, direction, out hit,Mathf.Infinity,layermask)) {
 				if (hit.transform.tag == "Enemy") {
 
 					string tagc = hit.transform.tag;
