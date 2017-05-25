@@ -71,6 +71,11 @@ public class mouseCharController : MonoBehaviour {
 			fireable = false;
 			Invoke ("fireCD", fireTime);
 			audi.Play ();
+			if (!scope) {
+				gunAnim.Play ("Shoot");
+			}
+
+
 			Vector3 physicsCentre = this.transform.position;
 			RaycastHit hit;
 			flash.Play ();

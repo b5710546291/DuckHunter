@@ -128,12 +128,6 @@ public class charactorController : MonoBehaviour {
 
 
 
-		if (Input.GetKeyDown("escape"))
-
-			Cursor.lockState = CursorLockMode.None;
-
-
-
 		//	Vector3 p1 = this.transform.position + this.GetComponent<CapsuleCollider> ().center + Vector3.up * -this.GetComponent<CapsuleCollider> ().height * 0.5F;
 
 		//	Vector3 p2 = p1 + Vector3.up * this.GetComponent<CapsuleCollider> ().height;
