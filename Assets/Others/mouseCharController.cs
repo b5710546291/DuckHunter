@@ -7,8 +7,8 @@ public class mouseCharController : MonoBehaviour {
 
 	Vector2 mouseLook;
 	Vector2 smoothV;
-	public float sensitivity = 2.0f;
-	public float smoothing = 2.0f;
+	float sensitivity;
+	float smoothing;
 	AudioSource audi;
 	public DuckSpawner spawn1;
 	public DuckSpawner spawn2;
@@ -16,8 +16,8 @@ public class mouseCharController : MonoBehaviour {
 	public DuckSpawner spawn4;
 	public DuckSpawner spawn5;
 	bool scope;
-	public float scopeFactor = 0.2f;
-	float usedSensitivity = 2.0f;
+	float scopeFactor;
+	float usedSensitivity;
 
 
 
@@ -41,6 +41,11 @@ public class mouseCharController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		sensitivity = PlayerPrefs.GetFloat("sensitivity", 2.0f); 
+		smoothing = PlayerPrefs.GetFloat("smoothing", 2.0f); 
+		scopeFactor = PlayerPrefs.GetFloat("scopeFactor", 0.06f); 
+		usedSensitivity = sensitivity;
+
 		scope = false;
 		charactor = this.transform.parent.gameObject;
 		audi = this.gameObject.GetComponent<AudioSource> ();
@@ -157,5 +162,11 @@ public class mouseCharController : MonoBehaviour {
 
 	void fireCD(){
 		fireable = true;
+	}
+
+	public void updateOption(float newSensitivity, float smooth, float scope){
+		sensitivity = newSensitivity;
+		smoothing = smooth;
+		scopeFactor = scope;
 	}
 }
