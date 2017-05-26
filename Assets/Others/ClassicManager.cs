@@ -21,6 +21,11 @@ public class ClassicManager : MonoBehaviour {
 	public int killcount{ get; set;}
 	public Text killCountText;
 
+	public Text[] nameList = new Text[10];
+	public Text[] scoreList = new Text[10];
+
+	int saveTo = -1;
+
 	// Use this for initialization
 	void Start () {
 		time = 5.0f;
@@ -58,19 +63,26 @@ public class ClassicManager : MonoBehaviour {
 		overScoreText.text = "Your Score:" +  killcount.ToString();
 		int[] scoreTemp = new int[10];
 		string[] nameTemp = new string[10];
-		int saveTo = -1;
 		for (int i = 1; i <=10; i++) {
-			scoreTemp[i-1] = PlayerPrefs.GetInt ("score" + i,0);
-			nameTemp[i-1] = PlayerPrefs.GetString ("name" + i,"Player");
+			scoreTemp [i - 1] = PlayerPrefs.GetInt ("score" + i, 0);
+			nameTemp [i - 1] = PlayerPrefs.GetString ("name" + i, "Player");
+			nameList [10-i].text = nameTemp [i - 1];
+			scoreList [10-i].text = scoreTemp [i - 1].ToString ();
+		}
+
+		for (int i = 1; i <= 10; i++) {
 			if (killcount <= scoreTemp [i - 1]) {
 				break;
 			} else {
 				saveTo = i;
 			}
 		}
+
 		if (saveTo > -1) {
-			PlayerPrefs.SetInt ("score"+saveTo,killcount);
 			isWorthy = true;
+			happyText.SetActive (true);
+		} else {
+			sadText.SetActive (true);
 		}
 
 
@@ -78,11 +90,6 @@ public class ClassicManager : MonoBehaviour {
 		Player.GetComponentInChildren<mouseCharController> ().enabled = false;
 		Cursor.lockState = CursorLockMode.None;
 
-		if (isWorthy) {
-			happyText.SetActive (true);
-		} else {
-			sadText.SetActive (true);
-		}
 
 
 
@@ -90,11 +97,28 @@ public class ClassicManager : MonoBehaviour {
 
 
 	public void toMainMenu(){
+		saveScore ();
 		SceneManager.LoadScene("MainMenu");
 	}
 
 	public void Replay(){
+		saveScore ();
 		SceneManager.LoadScene("basic1");
+	}
+
+	public void saveScore(){
+		if (isWorthy) {
+			InputField field = happyText.gameObject.transform.GetChild (0).gameObject.GetComponent<InputField>();;
+			string nameSave = "Player";
+			if (field.text == "") {
+				
+			} else {
+				nameSave = field.text;
+			}
+
+			PlayerPrefs.SetInt ("score"+saveTo,killcount);
+			PlayerPrefs.SetString ("name"+saveTo,nameSave);
+		}
 	}
 
 

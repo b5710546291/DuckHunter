@@ -8,6 +8,7 @@ public class ButtonScript : MonoBehaviour{
 
 	public Transform settingMenu;
 	public Transform normalMenu;
+	public Transform scoreMenu;
 
 	public Slider volumeSlider;
 	public Slider sensitivitySlider;
@@ -23,6 +24,9 @@ public class ButtonScript : MonoBehaviour{
 	float sensitivity;
 	float smooth;
 	float scope;
+
+	public Text[] nameList = new Text[10];
+	public Text[] scoreList = new Text[10];
 
 	public void Exit(){
 		Application.Quit();
@@ -105,4 +109,29 @@ public class ButtonScript : MonoBehaviour{
 		settingMenu.gameObject.SetActive (false);
 		normalMenu.gameObject.SetActive (true);
 	}
+
+	public void viewScoreBoard(){
+		scoreMenu.gameObject.SetActive (true);
+		normalMenu.gameObject.SetActive (false);
+		for (int i = 1; i <=10; i++) {
+			scoreList [10-i].text = PlayerPrefs.GetInt ("score" + i, 0).ToString ();
+			nameList [10-i].text = PlayerPrefs.GetString ("name" + i, "Player");
+		}
+	}
+
+	public void backScoreBoard(){
+		scoreMenu.gameObject.SetActive (false);
+		normalMenu.gameObject.SetActive (true);
+	}
+
+	public void clearScoreBoard(){
+
+		for (int i = 1; i <=10; i++) {
+			PlayerPrefs.SetInt ("score" + i, 0);
+			PlayerPrefs.SetString ("name" + i, "Player");
+			scoreList [10-i].text = PlayerPrefs.GetInt ("score" + i, 0).ToString ();
+			nameList [10-i].text = PlayerPrefs.GetString ("name" + i, "Player");
+		}
+	}
+
 }
