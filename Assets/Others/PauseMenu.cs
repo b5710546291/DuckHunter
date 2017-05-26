@@ -24,10 +24,12 @@ public class PauseMenu : MonoBehaviour {
 	float sensitivity;
 	float smooth;
 	float scope;
+
+	public GameObject classicManager;
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown (KeyCode.Escape)) {
+		if (Input.GetKeyDown (KeyCode.Escape) && !classicManager.GetComponent<ClassicManager>().isOver){
 			Pause ();
 		}
 	}
@@ -48,13 +50,13 @@ public class PauseMenu : MonoBehaviour {
 		Time.timeScale = 1;
 		Player.GetComponent<charactorController> ().enabled = true;
 		Player.GetComponentInChildren<mouseCharController> ().enabled = true;
-		AudioListener.volume = 1;
+		AudioListener.volume = PlayerPrefs.GetFloat ("volume",1);
 		Cursor.lockState = CursorLockMode.Locked;
 	}
 
 	public void toMainMenu(){
 		Time.timeScale = 1;
-		AudioListener.volume = 1;
+		AudioListener.volume = PlayerPrefs.GetFloat("volume",1);
 		SceneManager.LoadScene("MainMenu");
 	}
 

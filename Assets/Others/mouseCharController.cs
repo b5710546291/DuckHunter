@@ -19,11 +19,10 @@ public class mouseCharController : MonoBehaviour {
 	float scopeFactor;
 	float usedSensitivity;
 
+	public ClassicManager classicManager;
 
 
 
-	int killcount;
-	public Text killCountText;
 
 	GameObject charactor;
 	public GameObject crosshair;
@@ -49,8 +48,6 @@ public class mouseCharController : MonoBehaviour {
 		scope = false;
 		charactor = this.transform.parent.gameObject;
 		audi = this.gameObject.GetComponent<AudioSource> ();
-		killcount = 0;
-		killCountText.text = "Kill Count: " + killcount.ToString();
 		gunAnim = this.GetComponentInChildren<Animator> ();
 		normalFOV = this.GetComponent<Camera> ().fieldOfView;
 	}
@@ -71,7 +68,7 @@ public class mouseCharController : MonoBehaviour {
 		charactor.transform.localRotation = Quaternion.AngleAxis (mouseLook.x, charactor.transform.up);
 
 		if (Input.GetKeyDown (KeyCode.Mouse0) && fireable) {
-			GameManager.Instance.Score = killcount;
+			GameManager.Instance.Score = classicManager.killcount;
 			GameManager.Instance.FireAA ();
 			fireable = false;
 			Invoke ("fireCD", fireTime);
@@ -110,8 +107,8 @@ public class mouseCharController : MonoBehaviour {
 						duckAI sc = (duckAI)obj.GetComponent<duckAI> ();
 						sc.death ();
 
-						killcount++;
-						killCountText.text = "Kill Count: " + killcount.ToString();
+						classicManager.killcount++;
+						classicManager.updateKillCount();
 						float rando = Random.Range (0.0f, 5.0f);
 						if (rando < 1.0f)
 							spawn1.Spawn ();
