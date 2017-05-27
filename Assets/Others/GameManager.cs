@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void FireAA(){
-		Debug.Log (Score);
+		//Debug.Log (Score);
 	}
 
 }

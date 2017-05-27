@@ -36,7 +36,7 @@ public class duckAI : MonoBehaviour {
 
 
 		if (Physics.Raycast (physicsCentre, this.transform.rotation * Vector3.forward, out hit, 0.7f,~(1 << 9))) {
-			Debug.Log (hit.transform.gameObject.tag);
+			//Debug.Log (hit.transform.gameObject.tag);
 			this.gameObject.transform.Translate (Vector3.back * Time.deltaTime * speed * 2f);
 		}
 

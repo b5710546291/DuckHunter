@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using PlayFab;
+using PlayFab.ClientModels;
 
 public class ClassicManager : MonoBehaviour {
 	float time;
@@ -24,11 +26,13 @@ public class ClassicManager : MonoBehaviour {
 	public Text[] nameList = new Text[10];
 	public Text[] scoreList = new Text[10];
 
+	string nameSave;
+
 	int saveTo = -1;
 
 	// Use this for initialization
 	void Start () {
-		time = 5.0f;
+		time = 60.0f;
 		text.text = time.ToString ("F0");
 		killcount = 0;
 		updateKillCount ();
@@ -80,10 +84,7 @@ public class ClassicManager : MonoBehaviour {
 
 		if (saveTo > -1) {
 			isWorthy = true;
-			happyText.SetActive (true);
-		} else {
-			sadText.SetActive (true);
-		}
+		} 
 
 
 		Player.GetComponent<charactorController> ().enabled = false;
@@ -109,18 +110,61 @@ public class ClassicManager : MonoBehaviour {
 	public void saveScore(){
 		if (isWorthy) {
 			InputField field = happyText.gameObject.transform.GetChild (0).gameObject.GetComponent<InputField>();;
-			string nameSave = "Player";
+			nameSave = "Player";
 			if (field.text == "") {
 				
 			} else {
 				nameSave = field.text;
 			}
 
+			string nameTemp1 = PlayerPrefs.GetString ("name" + saveTo, "Player");
+			int scoreTemp1 = PlayerPrefs.GetInt ("score" + saveTo, 0);
+			string nameTemp2;
+			int scoreTemp2;
+
+			for (int i = saveTo-1; i >= 1; i--) {
+				nameTemp2= PlayerPrefs.GetString ("name" + i, "Player");
+				scoreTemp2= PlayerPrefs.GetInt ("score" + i, 0);
+				PlayerPrefs.SetString ("name"+i,nameTemp1);
+				PlayerPrefs.SetInt ("score"+i,scoreTemp1);
+				nameTemp1 = nameTemp2;
+				scoreTemp1 = scoreTemp2;
+
+			}
+
 			PlayerPrefs.SetInt ("score"+saveTo,killcount);
 			PlayerPrefs.SetString ("name"+saveTo,nameSave);
 		}
+		Sumitting ();
 	}
 
+	private void Sumitting(){
+		PlayFabSettings.TitleId = "B0E0"; 
 
+		LoginWithCustomIDRequest request = new LoginWithCustomIDRequest { CustomId = nameSave, CreateAccount = true};
+		PlayFabClientAPI.LoginWithCustomID(request, OnLoginSuccess, OnLoginFailure);
+	}
+
+	private void OnLoginSuccess(LoginResult result)
+	{
+		UpdateUserTitleDisplayNameRequest request = new UpdateUserTitleDisplayNameRequest ();
+		request.DisplayName = nameSave;
+		PlayFabClientAPI.UpdateUserTitleDisplayName  (request,null,null);
+
+		UpdatePlayerStatisticsRequest statRequest = new UpdatePlayerStatisticsRequest ();
+		statRequest.Statistics = new List<StatisticUpdate> ();
+		statRequest.Statistics.Add (new StatisticUpdate { StatisticName = "score", Version = 0, Value = killcount });
+
+		PlayFabClientAPI.UpdatePlayerStatistics (statRequest, null,OnSummitError );
+	}
+
+	private void OnLoginFailure(PlayFabError error)
+	{
+		Debug.Log("Fail to loggin: message: " + error.GenerateErrorReport ());
+	}
+
+	private void OnSummitError(PlayFabError error){
+		Debug.Log("Fail to submit score: " + error.GenerateErrorReport ());
+	}
 
 }
