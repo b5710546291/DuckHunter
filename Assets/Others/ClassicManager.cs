@@ -20,8 +20,8 @@ public class ClassicManager : MonoBehaviour {
 	public GameObject happyText;
 	public Text overScoreText;
 
-	public int killcount{ get; set;}
-	public Text killCountText;
+	public int score{ get; set;}
+	public Text scoreText;
 
 	public Text[] nameList = new Text[10];
 	public Text[] scoreList = new Text[10];
@@ -30,19 +30,38 @@ public class ClassicManager : MonoBehaviour {
 
 	int saveTo = -1;
 
+	int killStreak;
+	int bonusShotLeft;
+	float[] bonusMultiValue = new float[15];
+	int scoreTier;
+	public Text bonusMultiText;
+
 	// Use this for initialization
 	void Start () {
 		time = 60.0f;
 		text.text = time.ToString ("F0");
-		killcount = 0;
-		updateKillCount ();
+		score = 0;
+		scoreText.text = "Score: " + score.ToString();
 		isOver = false;
 		isWorthy = false;
 		StartCoroutine (timeReduce());
+		setBonusValue ();
+		bonusMultiText.text = "x" + bonusMultiValue[killStreak].ToString("F2") + " Point";
 	}
 
 	// Update is called once per frame
 	void Update () {
+	}
+
+	void setBonusValue(){
+		scoreTier = 0;
+		killStreak = 0;
+		bonusShotLeft = 1;
+		float added = 0;
+		for (int i = 0; i < 15; i++) {
+			added += 0.05f * (Mathf.Ceil(i/2));
+			bonusMultiValue [i] = 1f + added;
+		}
 	}
 
 	IEnumerator timeReduce(){
@@ -56,15 +75,36 @@ public class ClassicManager : MonoBehaviour {
 		}
 	}
 
-	public void updateKillCount(){
-		killCountText.text = "Kill Count: " + killcount.ToString();
+
+
+	public void updateScore(int distance){
+		score += (int)((1000 + (distance * 20)) * bonusMultiValue[killStreak]);
+		scoreText.text = "Score: " + score.ToString();
+		bonusShotLeft = 1;
+		if (killStreak < 14) {
+			killStreak++;
+		}
+		if ( score >= scoreTier * scoreTier * 1500) {
+			time += 5;
+			scoreTier++;
+		}
+		bonusMultiText.text = "x" + bonusMultiValue[killStreak].ToString("F2") + " Point";
+	}
+
+	public void missShot(){
+		if (bonusShotLeft < 1) {
+			killStreak = 0;
+			bonusMultiText.text = "x" + bonusMultiValue[killStreak].ToString("F2") + " Point";
+		}
+		bonusShotLeft -= 1;
+		bonusMultiText.text = "x" + bonusMultiValue[killStreak].ToString("F2") + " Point";
 	}
 
 	void gameOver(){
 		isOver = true;
 		mainUI.SetActive (false);
 		overUI.SetActive (true);
-		overScoreText.text = "Your Score:" +  killcount.ToString();
+		overScoreText.text = "Your Score:" +  score.ToString();
 		int[] scoreTemp = new int[10];
 		string[] nameTemp = new string[10];
 		for (int i = 1; i <=10; i++) {
@@ -75,7 +115,7 @@ public class ClassicManager : MonoBehaviour {
 		}
 
 		for (int i = 1; i <= 10; i++) {
-			if (killcount <= scoreTemp [i - 1]) {
+			if (score <= scoreTemp [i - 1]) {
 				break;
 			} else {
 				saveTo = i;
@@ -132,7 +172,7 @@ public class ClassicManager : MonoBehaviour {
 
 			}
 
-			PlayerPrefs.SetInt ("score"+saveTo,killcount);
+			PlayerPrefs.SetInt ("score"+saveTo,score);
 			PlayerPrefs.SetString ("name"+saveTo,nameSave);
 		}
 		Sumitting ();
@@ -153,7 +193,7 @@ public class ClassicManager : MonoBehaviour {
 
 		UpdatePlayerStatisticsRequest statRequest = new UpdatePlayerStatisticsRequest ();
 		statRequest.Statistics = new List<StatisticUpdate> ();
-		statRequest.Statistics.Add (new StatisticUpdate { StatisticName = "score", Version = 0, Value = killcount });
+		statRequest.Statistics.Add (new StatisticUpdate { StatisticName = "score", Version = 0, Value = score });
 
 		PlayFabClientAPI.UpdatePlayerStatistics (statRequest, null,OnSummitError );
 	}

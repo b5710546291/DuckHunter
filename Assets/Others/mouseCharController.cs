@@ -68,7 +68,7 @@ public class mouseCharController : MonoBehaviour {
 		charactor.transform.localRotation = Quaternion.AngleAxis (mouseLook.x, charactor.transform.up);
 
 		if (Input.GetKeyDown (KeyCode.Mouse0) && fireable) {
-			GameManager.Instance.Score = classicManager.killcount;
+			GameManager.Instance.Score = classicManager.score;
 			GameManager.Instance.FireAA ();
 			fireable = false;
 			Invoke ("fireCD", fireTime);
@@ -96,7 +96,7 @@ public class mouseCharController : MonoBehaviour {
 					string tagc = hit.transform.tag;
 					GameObject obj = hit.collider.transform.parent.gameObject;
 					int i = 1;
-					while(tagc == "Enemy"){
+					while (tagc == "Enemy") {
 						obj = obj.transform.parent.gameObject;
 						tagc = obj.transform.tag;
 						i++;
@@ -105,10 +105,11 @@ public class mouseCharController : MonoBehaviour {
 					}
 					if (tagc == "Duck") {
 						duckAI sc = (duckAI)obj.GetComponent<duckAI> ();
+						int distance = (int)(Vector3.Distance (transform.position, hit.transform.position));
 						sc.death ();
 
-						classicManager.killcount++;
-						classicManager.updateKillCount();
+
+						classicManager.updateScore (distance);
 						float rando = Random.Range (0.0f, 5.0f);
 						if (rando < 1.0f)
 							spawn1.Spawn ();
@@ -122,6 +123,8 @@ public class mouseCharController : MonoBehaviour {
 							spawn5.Spawn ();
 					}
 
+				} else {
+					classicManager.missShot ();
 				}
 
 			} 

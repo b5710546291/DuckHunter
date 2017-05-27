@@ -28,6 +28,7 @@ public class duckAI : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		if(Time.timeScale == 0)return;
 		Vector3 physicsCentre = this.transform.position + this.GetComponent<BoxCollider>().center;
 		//	Debug.DrawRay (physicsCentre,Quaternion.AngleAxis(curAngle + 0f, Vector3.up) * Vector3.forward * 4f, Color.red, 1);
 		//	Debug.DrawRay (physicsCentre,Quaternion.AngleAxis(curAngle + 45f,this.transform.rotation * Vector3.up) * Vector3.forward * 2.5f, Color.red, 1);

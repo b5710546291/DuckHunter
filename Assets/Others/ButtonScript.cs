@@ -215,4 +215,8 @@ public class ButtonScript : MonoBehaviour{
 		);
 		
 	}
+
+	public void Multiplayer(){
+
+	}
 }
