@@ -18,6 +18,7 @@ public class mouseCharController : MonoBehaviour {
 	bool scope;
 	float scopeFactor;
 	float usedSensitivity;
+	bool miss;
 
 	public ClassicManager classicManager;
 
@@ -44,7 +45,7 @@ public class mouseCharController : MonoBehaviour {
 		smoothing = PlayerPrefs.GetFloat("smoothing", 2.0f); 
 		scopeFactor = PlayerPrefs.GetFloat("scopeFactor", 0.06f); 
 		usedSensitivity = sensitivity;
-
+		miss = true;
 		scope = false;
 		charactor = this.transform.parent.gameObject;
 		audi = this.gameObject.GetComponent<AudioSource> ();
@@ -108,7 +109,7 @@ public class mouseCharController : MonoBehaviour {
 						int distance = (int)(Vector3.Distance (transform.position, hit.transform.position));
 						sc.death ();
 
-
+						miss = false;
 						classicManager.updateScore (distance);
 						float rando = Random.Range (0.0f, 5.0f);
 						if (rando < 1.0f)
@@ -124,10 +125,15 @@ public class mouseCharController : MonoBehaviour {
 					}
 
 				} else {
-					classicManager.missShot ();
+					miss = true;
 				}
 
 			} 
+			if (miss) {
+
+				classicManager.missShot ();
+			}
+			miss = true;
 		}
 
 		if (Input.GetButtonDown ("Fire2")) {

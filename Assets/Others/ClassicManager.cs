@@ -94,7 +94,6 @@ public class ClassicManager : MonoBehaviour {
 	public void missShot(){
 		if (bonusShotLeft < 1) {
 			killStreak = 0;
-			bonusMultiText.text = "x" + bonusMultiValue[killStreak].ToString("F2") + " Point";
 		}
 		bonusShotLeft -= 1;
 		bonusMultiText.text = "x" + bonusMultiValue[killStreak].ToString("F2") + " Point";
