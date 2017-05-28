@@ -45,6 +45,10 @@ public class MultiManager : NetworkBehaviour {
 		}
 	}
 
+	void OnPlayerConnected(NetworkPlayer player){
+		Debug.Log ("Player connected " + numberOfPlayer);
+	}
+
 
 
 

@@ -28,9 +28,13 @@ public class DuckMultiAI : NetworkBehaviour {
 	}
 
 	// Update is called once per frame
-	[Server]
 	void Update () {
-		if(Time.timeScale == 0 )return;
+		move ();
+	}
+
+	[Server]
+	public void move(){
+		if(Time.timeScale == 0)return;
 		Vector3 physicsCentre = this.transform.position + this.GetComponent<BoxCollider>().center;
 		//	Debug.DrawRay (physicsCentre,Quaternion.AngleAxis(curAngle + 0f, Vector3.up) * Vector3.forward * 4f, Color.red, 1);
 		//	Debug.DrawRay (physicsCentre,Quaternion.AngleAxis(curAngle + 45f,this.transform.rotation * Vector3.up) * Vector3.forward * 2.5f, Color.red, 1);
@@ -107,12 +111,12 @@ public class DuckMultiAI : NetworkBehaviour {
 		//	} else {
 		//		flying = true;
 		//	}
+
 	}
 
 	public void death(){
-		Instantiate( explode, transform.position, transform.rotation );
-		Instantiate( deadSFX, transform.position, transform.rotation );
-		Destroy (this.gameObject);
+		CmdSpawnDeadEffect ();
+		NetworkServer.Destroy (this.gameObject);
 	}
 
 	bool checkPath(Vector3 physicsCentre ,float rotation){
@@ -125,6 +129,25 @@ public class DuckMultiAI : NetworkBehaviour {
 
 	void resetTurn(){
 		turn = "none";
+	}
+
+	[Command]
+	void CmdSpawnDeadEffect()
+	{
+		var explodeOb = (GameObject)Instantiate(
+			explode,
+			transform.position,
+			transform.rotation);
+		var deadSFXOb = (GameObject)Instantiate(
+			deadSFX,
+			transform.position,
+			transform.rotation);
+
+
+		NetworkServer.Spawn(explodeOb);
+		NetworkServer.Spawn(deadSFXOb);
+
+
 	}
 
 }

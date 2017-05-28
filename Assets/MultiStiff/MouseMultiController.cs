@@ -95,7 +95,7 @@ public class MouseMultiController : MonoBehaviour {
 							break;
 					}
 					if (tagc == "Duck") {
-						duckAI sc = (duckAI)obj.GetComponent<duckAI> ();
+						DuckMultiAI sc = (DuckMultiAI)obj.GetComponent<DuckMultiAI> ();
 						sc.death ();
 
 
@@ -126,6 +126,7 @@ public class MouseMultiController : MonoBehaviour {
 		usedSensitivity = sensitivity * scopeFactor;
 		crosshair.SetActive (false);
 		WeaponCamera.SetActive (false);
+		//WeaponHolder.SetActive(false);
 		this.GetComponent<Camera> ().fieldOfView = scopedFOV;
 	}
 
@@ -134,6 +135,7 @@ public class MouseMultiController : MonoBehaviour {
 		usedSensitivity = sensitivity;
 		crosshair.SetActive (true);
 		WeaponCamera.SetActive (true);
+		//WeaponHolder.SetActive(true);
 		this.GetComponent<Camera> ().fieldOfView = normalFOV;
 	}
 
