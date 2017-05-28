@@ -5,7 +5,6 @@ using UnityEngine.Networking;
 
 public class DuckMultiAI : NetworkBehaviour {
 
-	public GameObject explode;
 	public Animator anim;
 	public bool flying;
 	float speed;
@@ -14,6 +13,7 @@ public class DuckMultiAI : NetworkBehaviour {
 	RaycastHit hit;
 	string turn;
 	public GameObject deadSFX;
+	public GameObject explode;
 
 
 	// Use this for initialization
@@ -32,9 +32,8 @@ public class DuckMultiAI : NetworkBehaviour {
 		move ();
 	}
 
-	[Server]
 	public void move(){
-		if(Time.timeScale == 0)return;
+		if(Time.timeScale == 0 || !isServer)return;
 		Vector3 physicsCentre = this.transform.position + this.GetComponent<BoxCollider>().center;
 		//	Debug.DrawRay (physicsCentre,Quaternion.AngleAxis(curAngle + 0f, Vector3.up) * Vector3.forward * 4f, Color.red, 1);
 		//	Debug.DrawRay (physicsCentre,Quaternion.AngleAxis(curAngle + 45f,this.transform.rotation * Vector3.up) * Vector3.forward * 2.5f, Color.red, 1);
@@ -114,10 +113,6 @@ public class DuckMultiAI : NetworkBehaviour {
 
 	}
 
-	public void death(){
-		CmdSpawnDeadEffect ();
-		NetworkServer.Destroy (this.gameObject);
-	}
 
 	bool checkPath(Vector3 physicsCentre ,float rotation){
 		if (Physics.Raycast (physicsCentre, Quaternion.AngleAxis (curAngle + (45f * rotation), this.transform.rotation * Vector3.up) * Vector3.forward, out hit, 2.5f,~(1 << 9))) {
@@ -131,23 +126,6 @@ public class DuckMultiAI : NetworkBehaviour {
 		turn = "none";
 	}
 
-	[Command]
-	void CmdSpawnDeadEffect()
-	{
-		var explodeOb = (GameObject)Instantiate(
-			explode,
-			transform.position,
-			transform.rotation);
-		var deadSFXOb = (GameObject)Instantiate(
-			deadSFX,
-			transform.position,
-			transform.rotation);
 
-
-		NetworkServer.Spawn(explodeOb);
-		NetworkServer.Spawn(deadSFXOb);
-
-
-	}
 
 }

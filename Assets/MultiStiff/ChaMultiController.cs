@@ -27,6 +27,9 @@ public class ChaMultiController : NetworkBehaviour {
 
 
 
+	public GameObject deadSFX;
+	public GameObject explode;
+
 	bool onGround;
 
 
@@ -221,6 +224,30 @@ public class ChaMultiController : NetworkBehaviour {
 
 		//Debug.Log ( this.GetComponent<Rigidbody> ().velocity + "    " + distanceTravelled + "   " + hit.normal + "    " + onGround );
 
+	}
+
+	[Command]
+	public void CmdSpawnDeadEffect(GameObject obj)
+	{
+		var explodeOb = (GameObject)Instantiate(
+			explode,
+			obj.transform.position,
+			obj.transform.rotation);
+		var deadSFXOb = (GameObject)Instantiate(
+			deadSFX,
+			obj.transform.position,
+			obj.transform.rotation);
+
+
+		NetworkServer.Spawn(explodeOb);
+		NetworkServer.Spawn(deadSFXOb);
+		NetworkServer.Destroy (obj.gameObject);
+		RpcTest ();
+	}
+
+	[ClientRpc]
+	public void RpcTest(){
+		NetworkManager.singleton.gameObject.GetComponent<MultiManager> ().Lose ();
 	}
 
 }

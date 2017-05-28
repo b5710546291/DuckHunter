@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
-public class MouseMultiController : MonoBehaviour {
+public class MouseMultiController : NetworkBehaviour {
 
 	Vector2 mouseLook;
 	Vector2 smoothV;
@@ -13,6 +14,8 @@ public class MouseMultiController : MonoBehaviour {
 	bool scope;
 	float scopeFactor;
 	float usedSensitivity;
+
+
 
 
 
@@ -95,11 +98,8 @@ public class MouseMultiController : MonoBehaviour {
 							break;
 					}
 					if (tagc == "Duck") {
-						DuckMultiAI sc = (DuckMultiAI)obj.GetComponent<DuckMultiAI> ();
-						sc.death ();
-
-
-
+						this.GetComponentInParent<ChaMultiController>().CmdSpawnDeadEffect (obj);
+						NetworkManager.singleton.gameObject.GetComponent<MultiManager> ().Win ();
 					} 
 
 				} 
@@ -107,6 +107,9 @@ public class MouseMultiController : MonoBehaviour {
 
 
 		}	
+
+
+
 		if (Input.GetButtonDown ("Fire2")) {
 			scope = !scope;
 			gunAnim.SetBool ("Scoped", scope);
@@ -148,4 +151,6 @@ public class MouseMultiController : MonoBehaviour {
 		smoothing = smooth;
 		scopeFactor = scope;
 	}
+
+
 }

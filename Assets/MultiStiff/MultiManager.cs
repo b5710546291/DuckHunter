@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MultiManager : NetworkBehaviour {
 
@@ -10,6 +11,11 @@ public class MultiManager : NetworkBehaviour {
 	float time;
 	public Text timeText;
 	public GameObject spawner;
+
+	public Text winText;
+	public Text loseText;
+	public GameObject _canvas;
+
 
 
 	// Use this for initialization
@@ -24,9 +30,9 @@ public class MultiManager : NetworkBehaviour {
 		
 	}
 
-	[Client]
 	public void ShutDown(){
 		Destroy (this.gameObject);
+		Network.Disconnect();
 		NetworkManager.Shutdown ();
 	}
 
@@ -50,8 +56,19 @@ public class MultiManager : NetworkBehaviour {
 	}
 
 
+	public void Win(){
+		Cursor.lockState = CursorLockMode.None;
+		_canvas.SetActive (true);
+		winText.gameObject.SetActive (true);
+	}
 
-
-
+	public void Lose(){
+		Cursor.lockState = CursorLockMode.None;
+		if (_canvas.activeInHierarchy) {
+			return;
+		}
+		_canvas.SetActive (true);
+		loseText.gameObject.SetActive (true);
+	}
 
 }

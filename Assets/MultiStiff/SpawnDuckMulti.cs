@@ -24,7 +24,7 @@ public class SpawnDuckMulti : NetworkBehaviour {
 		CmdSpwnDuck ();
 	}
 
-	[Command]
+	[Server]
 	void CmdSpwnDuck()
 	{
 		var Duck = (GameObject)Instantiate(
@@ -34,7 +34,6 @@ public class SpawnDuckMulti : NetworkBehaviour {
 
 
 		NetworkServer.Spawn(Duck);
-
 
 	}
 }
