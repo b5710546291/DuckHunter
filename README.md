@@ -14,8 +14,8 @@ LeftClick - fire;
 
 RightClick - scope;
 
-Single Player Mode - Kill the duck in time limit to get the highest score. Bonus 5 second when reach specific score. 
-                        Consecutive hitto gain bonus score multiplier.
+Single Player Mode - Kill the duck in the time limit to get the highest score. Bonus 5 second when reach specific point. 
+                        Consecutive hit to gain bonus score multiplier.
 
 Multi Player Mode - The duck will spawn in 10 second. The one who kill the duck first is the winner.
 
@@ -23,13 +23,13 @@ Multi Player Mode - The duck will spawn in 10 second. The one who kill the duck 
 ### Download
 
 
-Window     [Version 2.00](https://mega.nz/#!hHxQlBbR!qMdJRU8orl2zyltZF53NynFwQ00bIpMdYmY1TH9TcjY)     [Version 2.00](https://drive.google.com/file/d/0B6HTqyb1iyJZS2RyaUFXZkJYT28/view?usp=sharing)  
+Window [Version 2.00](https://mega.nz/#!hHxQlBbR!qMdJRU8orl2zyltZF53NynFwQ00bIpMdYmY1TH9TcjY)     [Version 2.00](https://drive.google.com/file/d/0B6HTqyb1iyJZS2RyaUFXZkJYT28/view?usp=sharing)  
 
-[Version 1.02a](https://mega.nz/#!ROJlAT5T!s2-b97SRGg858_LVOCRW6S0yW5tXjX8ckb_LUj1mTgI) fix character sound
+Window [Version 1.02a](https://mega.nz/#!ROJlAT5T!s2-b97SRGg858_LVOCRW6S0yW5tXjX8ckb_LUj1mTgI) fix character sound
 
-[Version 1.02](https://mega.nz/#!ZaIgwYpR!Isti596AVJ3RQ-Ml4rsIbxEhUdzh9bZKG9jtZ0RQ-HA)     [Version 1.02](https://drive.google.com/open?id=0B6HTqyb1iyJZdWxTM0NrRHM4X2c) 
+Window [Version 1.02](https://mega.nz/#!ZaIgwYpR!Isti596AVJ3RQ-Ml4rsIbxEhUdzh9bZKG9jtZ0RQ-HA)     [Version 1.02](https://drive.google.com/open?id=0B6HTqyb1iyJZdWxTM0NrRHM4X2c) 
 
-[Version 1.01](https://mega.nz/#!0Wxy3ZaT!6zPjUoLKp46e5MjFFDCNrzXXSLGzIke6Ef3LYZTWkM4) 
+Window [Version 1.01](https://mega.nz/#!0Wxy3ZaT!6zPjUoLKp46e5MjFFDCNrzXXSLGzIke6Ef3LYZTWkM4) 
 
 
 
