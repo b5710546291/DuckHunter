@@ -23,7 +23,7 @@ Multi Player Mode - The duck will spawn in 10 second. The one who kill the duck 
 ### Download
 
 
-Window [Version 2.00](https://mega.nz/#!hHxQlBbR!qMdJRU8orl2zyltZF53NynFwQ00bIpMdYmY1TH9TcjY)     [Version 2.00](https://drive.google.com/file/d/0B6HTqyb1iyJZS2RyaUFXZkJYT28/view?usp=sharing)  
+Window [Version 2.00](https://mega.nz/#!hHxQlBbR!qMdJRU8orl2zyltZF53NynFwQ00bIpMdYmY1TH9TcjY)     [Version 2.00](https://drive.google.com/file/d/0B6HTqyb1iyJZS2RyaUFXZkJYT28/view?usp=sharing)  Mac [Version 2.00](https://drive.google.com/drive/folders/0BycjqcAlzn1UeFpTbnZtcWVWeWs)
 
 Window [Version 1.02a](https://mega.nz/#!ROJlAT5T!s2-b97SRGg858_LVOCRW6S0yW5tXjX8ckb_LUj1mTgI) fix character sound
 
