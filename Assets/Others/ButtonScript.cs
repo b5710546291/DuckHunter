@@ -216,7 +216,4 @@ public class ButtonScript : MonoBehaviour{
 		
 	}
 
-	public void Multiplayer(){
-		SceneManager.LoadScene ("multi1");
-	}
 }

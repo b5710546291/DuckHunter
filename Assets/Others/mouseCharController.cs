@@ -41,6 +41,7 @@ public class mouseCharController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		Cursor.lockState = CursorLockMode.Locked;
 		sensitivity = PlayerPrefs.GetFloat("sensitivity", 2.0f); 
 		smoothing = PlayerPrefs.GetFloat("smoothing", 2.0f); 
 		scopeFactor = PlayerPrefs.GetFloat("scopeFactor", 0.06f); 

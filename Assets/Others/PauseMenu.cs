@@ -38,7 +38,6 @@ public class PauseMenu : MonoBehaviour {
 
 		canvas.gameObject.SetActive (true);
 		Time.timeScale = 0;
-		Player.GetComponent<charactorController> ().enabled = false;
 		Player.GetComponentInChildren<mouseCharController> ().enabled = false;
 		AudioListener.volume = 0;
 		Cursor.lockState = CursorLockMode.None;
@@ -48,7 +47,6 @@ public class PauseMenu : MonoBehaviour {
 	public void UnPause(){
 		canvas.gameObject.SetActive (false);
 		Time.timeScale = 1;
-		Player.GetComponent<charactorController> ().enabled = true;
 		Player.GetComponentInChildren<mouseCharController> ().enabled = true;
 		AudioListener.volume = PlayerPrefs.GetFloat ("volume",1);
 		Cursor.lockState = CursorLockMode.Locked;

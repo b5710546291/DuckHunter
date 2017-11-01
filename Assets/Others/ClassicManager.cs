@@ -126,7 +126,6 @@ public class ClassicManager : MonoBehaviour {
 		} 
 
 
-		Player.GetComponent<charactorController> ().enabled = false;
 		Player.GetComponentInChildren<mouseCharController> ().enabled = false;
 		Cursor.lockState = CursorLockMode.None;
 
